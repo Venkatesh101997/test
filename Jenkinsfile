@@ -1,10 +1,8 @@
 pipeline {
-    agent {
-        label 'nodejs'
-    }
-
+    agent any
+    
     stages {
-        stage('Checkout') {
+        stage('Checkout SCM') {
             steps {
                 script {
                     checkout scm
@@ -15,9 +13,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Assuming your project has a build script, for example, npm build
-                    sh 'npm install'
-                    sh 'npm run build'
+                    // Your build steps here
+                    echo 'Building...'
                 }
             }
         }
@@ -25,10 +22,20 @@ pipeline {
         stage('Deploy to Apache') {
             steps {
                 script {
-                    // Copy the built files to the Apache deployment path
-                    sh 'cp -r /var/lib/jenkins/workspace/build/dist/* /var/www/html/'
+                    // Your deployment steps here
+                    echo 'Deploying to Apache...'
+                    
+                    // Copy files from Jenkins workspace to Apache deployment path
+                    sh 'cp -r /var/lib/jenkins/workspace/build/* /var/www/html/'
                 }
             }
+        }
+    }
+    
+    post {
+        always {
+            // Clean up workspace after the build
+            cleanWs()
         }
     }
 }
