@@ -15,7 +15,7 @@ pipeline {
                 script {
                     // Set up NodeJS environment
                     tools {
-                        nodejs 'NodeJS'
+                        nodejs 'nodejs'
                     }
                     
                     // Execute build commands
