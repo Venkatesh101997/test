@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'nodejs'
+    }
 
     stages {
         stage('Checkout') {
@@ -13,12 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Set up NodeJS environment
-                    tools {
-                        nodejs 'nodejs'
-                    }
-                    
-                    // Execute build commands
+                    // Assuming your project has a build script, for example, npm build
                     sh 'npm install'
                     sh 'npm run build'
                 }
