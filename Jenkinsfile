@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    git 'https://github.com/Venkatesh101997/test.git'
+                    checkout scm
                 }
             }
         }
@@ -13,9 +13,12 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    // Set up NodeJS environment
                     tools {
                         nodejs 'NodeJS'
                     }
+                    
+                    // Execute build commands
                     sh 'npm install'
                     sh 'npm run build'
                 }
@@ -25,6 +28,7 @@ pipeline {
         stage('Deploy to Apache') {
             steps {
                 script {
+                    // Copy the built files to the Apache deployment path
                     sh 'cp -r /var/lib/jenkins/workspace/build/dist/* /var/www/html/'
                 }
             }
