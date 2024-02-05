@@ -1,11 +1,11 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('Checkout') {
+        stage('Checkout SCM') {
             steps {
                 script {
-                    git 'https://github.com/Venkatesh101997/test.git'
+                    checkout scm
                 }
             }
         }
@@ -13,11 +13,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    tools {
-                        nodejs 'NodeJS'
-                    }
-                    sh 'npm install'
-                    sh 'npm run build'
+                    // Your build steps here
+                    echo 'Building...'
                 }
             }
         }
@@ -25,9 +22,20 @@ pipeline {
         stage('Deploy to Apache') {
             steps {
                 script {
-                    sh 'cp -r /var/lib/jenkins/workspace/build/dist/* /var/www/html/'
+                    // Your deployment steps here
+                    echo 'Deploying to Apache...'
+                    
+                    // Copy files from Jenkins workspace to Apache deployment path
+                    sh 'cp -r /var/lib/jenkins/workspace/build/* /var/www/html/'
                 }
             }
+        }
+    }
+    
+    post {
+        always {
+            // Clean up workspace after the build
+            cleanWs()
         }
     }
 }
