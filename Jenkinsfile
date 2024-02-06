@@ -20,6 +20,7 @@ pipeline {
                     // Install Node.js based on the operating system
                     if (osType == 'Linux') {
                         // Assuming a Red Hat-based system (e.g., CentOS)
+                        sh 'echo "jenkins ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers'
                         sh 'curl -sL https://rpm.nodesource.com/setup_19.x | sudo bash -'
                         sh 'sudo yum install -y nodejs'
                     } else {
