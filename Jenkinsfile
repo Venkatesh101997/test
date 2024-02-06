@@ -14,9 +14,18 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 script {
-                    // Install Node.js and npm without sudo
-                    sh 'curl -sL https://deb.nodesource.com/setup_18.x | bash -'
-                    sh 'yum install -y nodejs'
+                    // Detect the operating system
+                    def osType = sh(script: 'uname', returnStdout: true).trim()
+
+                    // Install Node.js based on the operating system
+                    if (osType == 'Linux') {
+                        // Assuming a Red Hat-based system (e.g., CentOS)
+                        sh 'curl -sL https://rpm.nodesource.com/setup_14.x | bash -'
+                        sh 'yum install -y nodejs'
+                    } else {
+                        echo "Unsupported operating system: ${osType}"
+                        error "Unsupported operating system"
+                    }
 
                     // Navigate to the directory containing package.json
                     dir('path/to/your/project') {
