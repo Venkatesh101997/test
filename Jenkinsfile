@@ -15,8 +15,8 @@ pipeline {
             steps {
                 script {
                     // Install Node.js and npm without sudo
-                    sh 'curl -sL https://deb.nodesource.com/setup_14.x | bash -'
-                    sh 'apt-get install -y nodejs'
+                    sh 'curl -sL https://deb.nodesource.com/setup_18.x | bash -'
+                    sh 'yum install -y nodejs'
 
                     // Navigate to the directory containing package.json
                     dir('path/to/your/project') {
