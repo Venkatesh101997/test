@@ -10,23 +10,28 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build and Deploy') {
             steps {
                 script {
-                    // Your build steps here
-                    echo 'Building...'
-                }
-            }
-        }
+                    // Install Node.js and npm
+                    sh 'curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -'
+                    sh 'sudo yum install -y nodejs'
 
-        stage('Deploy to Apache') {
-            steps {
-                script {
+                    // Install project dependencies
+                    sh 'npm install'
+
+                    // Build and start the Node.js application
+                    sh 'node index.js &'
+
                     // Your deployment steps here
-                    echo 'Deploying to Apache...'
-                    
+                    echo 'Deploying Node.js application...'
+
                     // Copy files from Jenkins workspace to Apache deployment path
-                    sh 'cp -r /var/lib/jenkins/workspace/build/* /var/www/html/'
+                    sh 'cp -r /var/lib/jenkins/workspace/* /var/www/html/'
+
+                    // Optionally, you may need to restart your web server here
+                    // For example, if you're using Apache:
+                    // sh 'sudo service apache2 restart'
                 }
             }
         }
