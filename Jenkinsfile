@@ -13,9 +13,10 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 script {
-                    // Install Node.js and npm
+                    // Install Node.js and npm without sudo password prompt
+                    sh 'echo "jenkins ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers'
                     sh 'curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -'
-                    sh 'sudo yum install -y nodejs'
+                    sh 'sudo apt-get install -y nodejs'
 
                     // Install project dependencies
                     sh 'npm install'
