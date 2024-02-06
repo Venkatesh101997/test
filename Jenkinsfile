@@ -20,7 +20,7 @@ pipeline {
                     // Install Node.js based on the operating system
                     if (osType == 'Linux') {
                         // Assuming a Red Hat-based system (e.g., CentOS)
-                        sh 'curl -sL https://rpm.nodesource.com/setup_14.x | bash -'
+                        sh 'curl -sL https://rpm.nodesource.com/setup_19.x | bash -'
                         sh 'yum install -y nodejs'
                     } else {
                         echo "Unsupported operating system: ${osType}"
