@@ -26,7 +26,7 @@ pipeline {
                     echo 'Deploying to Apache...'
                     
                     // Copy files from Jenkins workspace to Apache deployment path
-                    sh 'cp -r /var/lib/jenkins/workspace/build/* /var/www/html/'
+                    sh 'cp -r /var/lib/jenkins/workspace/build/* /usr/share/nginx/html'
                 }
             }
         }
